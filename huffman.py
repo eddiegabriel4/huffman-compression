@@ -33,7 +33,7 @@ def combine(a: HuffmanNode, b: HuffmanNode) -> HuffmanNode:
     """Creates a new Huffman node with children a and b, with the "lesser node" on the left
     The new node's frequency value will be the sum of the a and b frequencies
     The new node's char value will be the lower of the a and b char ASCII values"""
-    HuffmanNode1 = HuffmanNode(None, None)
+    HuffmanNode1 = HuffmanNode(0, 0)
     HuffmanNode1.char_ascii = min(a.char_ascii, b.char_ascii)
     HuffmanNode1.freq = (a.freq) + (b.freq)
     if comes_before(a, b) == True:
@@ -78,7 +78,7 @@ def create_huff_tree(char_freq: List) -> Optional[HuffmanNode]:
     None_counter = []
     for i in range(0, len(char_freq)):
         if char_freq[i] > 0:
-            HuffmanNode1 = HuffmanNode(None, None)
+            HuffmanNode1 = HuffmanNode(0, 0)
             HuffmanNode1.char_ascii = i
             HuffmanNode1.freq = char_freq[i]
             sorted_list.append(HuffmanNode1)
