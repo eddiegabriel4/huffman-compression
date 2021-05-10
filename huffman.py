@@ -10,10 +10,10 @@ class HuffmanNode:
 
     def __lt__(self, other: HuffmanNode) -> bool:
         return comes_before(self, other)
-    """
+    
     def __repr__(self) -> str:
         return ("HuffmanNode({!r}, {!r}, {!r}, {!r})".format(chr(self.char_ascii), self.freq, self.left, self.right))
-    """
+    
 
 def comes_before(a: HuffmanNode, b: HuffmanNode) -> bool:
     """Returns True if tree rooted at node a comes before tree rooted at node b, False otherwise"""
@@ -53,12 +53,17 @@ def cnt_freq(filename: str) -> List:
     The ASCII value of the characters are used to index into this list for the frequency counts"""
     with open(filename, 'r') as dataf:
         data_lines = dataf.readlines()
-    all_str = []
+    test = data_lines[len(data_lines) - 1]
+    if test[len(test) - 1:] == '\n':
+        test2 = test[:len(test) - 1]
+        data_lines.remove(data_lines[len(data_lines) - 1])
+        data_lines.append(test2)
     final = ''.join(data_lines)
     final_list = [0]*256
     for j in final:
-        freq = final.count(j)
-        final_list[ord(j)] = freq
+        if ord(j) <= 256:
+            freq = final.count(j)
+            final_list[ord(j)] = freq
     return final_list
 
 
@@ -94,29 +99,70 @@ def create_huff_tree(char_freq: List) -> Optional[HuffmanNode]:
         return sorted_listy[0]
 
 
-
-
-
-
-
 def create_code(node: Optional[HuffmanNode]) -> List:
     """Returns an array (Python list) of Huffman codes. For each character, use the integer ASCII representation
     as the index into the array, with the resulting Huffman code for that character stored at that location.
     Characters that are unused should have an empty string at that location"""
+    huff_codes = ['']*256
+    if node.left == None and node.right == None:
+        create_help(node, '', huff_codes)
+    if node.left:
+        create_help(node.left, '0', huff_codes)
+    if node.right:
+        create_help(node.right, '1', huff_codes)
+    return huff_codes
 
+    
+
+def create_help(node, temp_str, huff_codes):
+    if node.left == None and node.right == None:
+        huff_codes[node.char_ascii] = temp_str
+        return huff_codes
+    if node.left:
+        yes = temp_str + '0'
+        create_help(node.left, yes, huff_codes)
+    if node.right:
+        yes = temp_str + '1'
+        create_help(node.right, yes, huff_codes)
 
 
 def create_header(freqs: List) -> str:
     """Input is the list of frequencies (provided by cnt_freq()).
     Creates and returns a header for the output file
     Example: For the frequency list asscoaied with "aaabbbbcc, would return “97 3 98 4 99 2” """
+    final = []
+    for i in range(0, len(freqs)):
+        if freqs[i] != 0:
+            final.append(str(i))
+            final.append(str(freqs[i]))
+    a = ' '.join(final)
+    return a
+
 
 
 def huffman_encode(in_file: str, out_file: str) -> None:
     """Takes inout file name and output file name as parameters
     Uses the Huffman coding process on the text from the input file and writes encoded text to output file
     Take not of special cases - empty file and file with only one unique character"""
+    freq_cnt = cnt_freq(in_file)
+    root = create_huff_tree(freq_cnt)
+    huff_codes_lst = create_code(root)
+    header = create_header(freq_cnt)
+    with open(in_file, 'r') as dataf:
+        data_lines = dataf.readlines()
+    test = data_lines[len(data_lines) - 1]
+    if test[len(test) - 1:] == '\n':
+        test2 = test[:len(test) - 1]
+        data_lines.remove(data_lines[len(data_lines) - 1])
+        data_lines.append(test2)
+    final = ''.join(data_lines)
+    all_codes = []
+    for i in range(0, len(final)):
+        index = ord(final[i])
+        all_codes.append(huff_codes_lst[index])
+    yes = ''.join(all_codes)
+    with open(out_file, 'w', newline = '') as outall:
+        outall.write(header + '\n')
+        outall.write(yes)
 
 
-x = cnt_freq('example.py')
-print(create_huff_tree(x))
