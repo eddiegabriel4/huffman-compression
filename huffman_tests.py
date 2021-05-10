@@ -52,6 +52,12 @@ class TestList(unittest.TestCase):
     def test_create_header(self) -> None:
         freqlist = cnt_freq("file2.txt")
         self.assertEqual(create_header(freqlist), "97 2 98 4 99 8 100 16 102 2")
+
+    def test_before_false(self) -> None:
+        a = HuffmanNode(71, 8)
+        b = HuffmanNode(70, 8)
+        self.assertEqual(comes_before(a, b), False)
+
     
     def test_create_code(self) -> None:
         freqlist = cnt_freq("file2.txt")

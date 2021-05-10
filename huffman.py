@@ -10,10 +10,10 @@ class HuffmanNode:
 
     def __lt__(self, other: HuffmanNode) -> bool:
         return comes_before(self, other)
-    
+"""    
     def __repr__(self) -> str:
         return ("HuffmanNode({!r}, {!r}, {!r}, {!r})".format(chr(self.char_ascii), self.freq, self.left, self.right))
-    
+""" 
 
 def comes_before(a: HuffmanNode, b: HuffmanNode) -> bool:
     """Returns True if tree rooted at node a comes before tree rooted at node b, False otherwise"""
