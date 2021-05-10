@@ -114,7 +114,7 @@ def create_code(node: Optional[HuffmanNode]) -> List:
 
     
 
-def create_help(node, temp_str, huff_codes):
+def create_help(node: Optional[HuffmanNode], temp_str:str, huff_codes:list) -> List:
     if node.left == None and node.right == None:
         huff_codes[node.char_ascii] = temp_str
         return huff_codes
@@ -164,5 +164,4 @@ def huffman_encode(in_file: str, out_file: str) -> None:
     with open(out_file, 'w', newline = '') as outall:
         outall.write(header + '\n')
         outall.write(yes)
-
 
