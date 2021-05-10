@@ -58,6 +58,10 @@ class TestList(unittest.TestCase):
         b = HuffmanNode(70, 8)
         self.assertEqual(comes_before(a, b), False)
 
+    def test_all_none(self) -> None:
+        char_freq = [0]*256
+        self.assertEqual(create_huff_tree(char_freq), None)
+
     
     def test_create_code(self) -> None:
         freqlist = cnt_freq("file2.txt")
