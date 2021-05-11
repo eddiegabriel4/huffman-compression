@@ -72,7 +72,6 @@ class TestList(unittest.TestCase):
         no = HuffmanNode(100, 20)
         other = HuffmanNode(130, 40)
         yes = no.__lt__(other)
-        print(yes)
         self.assertTrue(yes)
 
 
