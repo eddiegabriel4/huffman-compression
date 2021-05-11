@@ -104,8 +104,6 @@ def create_code(node: Optional[HuffmanNode]) -> List:
     as the index into the array, with the resulting Huffman code for that character stored at that location.
     Characters that are unused should have an empty string at that location"""
     huff_codes = ['']*256
-    if node == None:
-        return huff_codes
     if node.left == None and node.right == None:
         create_help(node, '', huff_codes)
     if node.left:
@@ -117,8 +115,6 @@ def create_code(node: Optional[HuffmanNode]) -> List:
     
 
 def create_help(node: Optional[HuffmanNode], temp_str:str, huff_codes:list) -> List:
-    if node == None:
-        return huff_codes
     if node.left == None and node.right == None:
         huff_codes[node.char_ascii] = temp_str
         return huff_codes
