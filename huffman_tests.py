@@ -72,9 +72,9 @@ class TestList(unittest.TestCase):
         self.assertEqual(codes[ord('f')], '0001')
     
     def test_01_textfile(self) -> None:
-        huffman_encode("file1.txt", "file1_out.txt")
+        huffman_encode("declaration.txt", "file1_out.txt")
         # capture errors by comparing your encoded file with a *known* solution file
-        self.assertTrue(compare_files("file1_out.txt", "file1_soln.txt"))
+        self.assertTrue(compare_files("file1_out.txt", "declaration_soln.txt"))
 
 # Compare files - takes care of CR/LF, LF issues
 def compare_files(file1: str, file2: str) -> bool: # pragma: no cover
