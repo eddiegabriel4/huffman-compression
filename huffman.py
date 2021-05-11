@@ -51,8 +51,11 @@ def cnt_freq(filename: str) -> List:
     frequency of occurrences of all the characters within that file
     Returns a Python List with 256 entries - counts are initialized to zero.
     The ASCII value of the characters are used to index into this list for the frequency counts"""
-    with open(filename, 'r') as dataf:
-        data_lines = dataf.readlines()
+    try:
+        with open(filename, 'r') as dataf:
+            data_lines = dataf.readlines()
+    except:
+        raise FileNotFoundError
     test = data_lines[len(data_lines) - 1]
     if test[len(test) - 1:] == '\n':
         test2 = test[:len(test) - 1]
@@ -149,8 +152,11 @@ def huffman_encode(in_file: str, out_file: str) -> None:
     root = create_huff_tree(freq_cnt)
     huff_codes_lst = create_code(root)
     header = create_header(freq_cnt)
-    with open(in_file, 'r') as dataf:
-        data_lines = dataf.readlines()
+    try:
+        with open(in_file, 'r') as dataf:
+            data_lines = dataf.readlines()
+    except:
+        raise FileNotFoundError
     test = data_lines[len(data_lines) - 1]
     if test[len(test) - 1:] == '\n':
         test2 = test[:len(test) - 1]
@@ -165,4 +171,3 @@ def huffman_encode(in_file: str, out_file: str) -> None:
     with open(out_file, 'w', newline = '') as outall:
         outall.write(header + '\n')
         outall.write(yes)
-
