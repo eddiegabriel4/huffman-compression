@@ -99,7 +99,7 @@ def create_huff_tree(char_freq: List) -> Optional[HuffmanNode]:
         return sorted_listy[0]
 
 
-def create_code(node) -> List:
+def create_code(node: Optional[HuffmanNode]) -> List:
     """Returns an array (Python list) of Huffman codes. For each character, use the integer ASCII representation
     as the index into the array, with the resulting Huffman code for that character stored at that location.
     Characters that are unused should have an empty string at that location"""
@@ -114,7 +114,7 @@ def create_code(node) -> List:
 
     
 
-def create_help(node, temp_str, huff_codes) -> List:
+def create_help(node: Optional[HuffmanNode], temp_str:str, huff_codes:list) -> List:
     if node.left == None and node.right == None:
         huff_codes[node.char_ascii] = temp_str
         return huff_codes
