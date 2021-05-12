@@ -56,11 +56,6 @@ def cnt_freq(filename: str) -> List:
             data_lines = dataf.readlines()
     except:
         raise FileNotFoundError
-    test = data_lines[len(data_lines) - 1]
-    if test[len(test) - 1:] == '\n':
-        test2 = test[:len(test) - 1]
-        data_lines.remove(data_lines[len(data_lines) - 1])
-        data_lines.append(test2)
     final = ''.join(data_lines)
     final_list = [0]*256
     for j in final:
@@ -157,11 +152,6 @@ def huffman_encode(in_file: str, out_file: str) -> None:
             data_lines = dataf.readlines()
     except:
         raise FileNotFoundError
-    test = data_lines[len(data_lines) - 1]
-    if test[len(test) - 1:] == '\n':
-        test2 = test[:len(test) - 1]
-        data_lines.remove(data_lines[len(data_lines) - 1])
-        data_lines.append(test2)
     final = ''.join(data_lines)
     all_codes = []
     for i in range(0, len(final)):
@@ -171,3 +161,4 @@ def huffman_encode(in_file: str, out_file: str) -> None:
     with open(out_file, 'w', newline = '') as outall:
         outall.write(header + '\n')
         outall.write(yes)
+
