@@ -106,6 +106,18 @@ class TestList(unittest.TestCase):
         # detect errors by comparing your encoded file with a *known* solution file
         self.assertTrue(compare_files("declaration.txt", "declaration_decode.txt"))
 
+    def test_errors_01(self) -> None:
+        with self.assertRaises(FileNotFoundError):
+            cnt_freq('sdjhfsjhf.txt')
+
+    def test_errors_02(self) -> None:
+        with self.assertRaises(FileNotFoundError):
+            huffman_encode('fsljdfhsjfh.txt', 'fasoudhf.txt')
+
+    def test_errors_03(self) -> None:
+        with self.assertRaises(FileNotFoundError):
+            huffman_decode('faskdjfhasiudhfiasdhf.txt', 'tashdfiu.txt')
+
 
 
 # Compare files - takes care of CR/LF, LF issues
