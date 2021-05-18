@@ -187,7 +187,7 @@ def leaf_check(root: Optional[HuffmanNode]) -> bool:
         return False
 
 
-def huff_tree_verse2(root: Optinal[HuffmanNode], codec: str) -> List:
+def huff_tree_verse2(root: Optional[HuffmanNode], codec: str) -> List:
     """Takes the completed huffman tree and all the ones and zeroes in the encoded file. Iterates over the data and adds the leaf nodes' character data to a list"""
 
     decoded = []
@@ -212,7 +212,6 @@ def huffman_decode(encoded_file: str, decoded_file: str) -> None:
     freq_lst = parse_header(data_lines[0])
     root = create_huff_tree(freq_lst)
     codec = data_lines[1][:len(data_lines[1]) - 1]
-    decoded = []
     text = huff_tree_verse2(root, codec)
     texty = ''.join(text)
     with open(decoded_file, 'w', newline = '') as outall:

@@ -123,24 +123,6 @@ def compare_files(file1: str, file2: str) -> bool: # pragma: no cover
                     done = True
                     match = False
     return match
-
-# Compare files - takes care of CR/LF, LF issues
-def compare_files(file1: str,file2: str) -> bool:
-    match = True
-    done = False
-    with open(file1, "r") as f1:
-        with open(file2, "r") as f2:
-            while not done:
-                line1 = f1.readline().strip()
-                line2 = f2.readline().strip()
-                if line1 == '' and line2 == '':
-                    done = True
-                if line1 != line2:
-                    done = True
-                    match = False
-    return match
-
-
     
 if __name__ == '__main__':
     unittest.main()
