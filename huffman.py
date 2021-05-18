@@ -207,8 +207,11 @@ def huffman_decode(encoded_file: str, decoded_file: str) -> None:
     """
     reads an encoded file and turns it into readable information which it writes to an output file
     """
-    with open(encoded_file, 'r') as dataf:
-        data_lines = dataf.readlines()
+    try:
+        with open(encoded_file, 'r') as dataf:
+            data_lines = dataf.readlines()
+    except:
+        raise FileNotFoundError
     freq_lst = parse_header(data_lines[0])
     root = create_huff_tree(freq_lst)
     codec = data_lines[1][:len(data_lines[1]) - 1]
