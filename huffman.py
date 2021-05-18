@@ -12,9 +12,10 @@ class HuffmanNode:
 
     def __lt__(self, other: HuffmanNode) -> bool:
         return comes_before(self, other)
-
+"""
     def __repr__(self) -> str:
         return ("HuffmanNode({!r}, {!r}, {!r}, {!r})".format(chr(self.char_ascii), self.freq, self.left, self.right)) 
+"""
 
 def comes_before(a: HuffmanNode, b: HuffmanNode) -> bool:
     """Returns True if tree rooted at node a comes before tree rooted at node b, False otherwise"""
@@ -180,8 +181,6 @@ def parse_help(header_list, frequen_list):
 
 def leaf_check(root):
     """checks if a node is a leaf node that has no left and right attributes"""
-    if root == None:
-        return False
     if root.right == None and root.left == None:
         return True
     else:
@@ -203,7 +202,7 @@ def huff_tree_verse2(root, codec):
             reset = root
     return decoded
 
-
+"""
 def huff_tree_verse_recur(root, codec, decoded):
 
     if len(codec) > 0:
@@ -212,8 +211,8 @@ def huff_tree_verse_recur(root, codec, decoded):
         if int(codec[0]) == 0:
             huff_tree_verse_help(root, root.left, codec[1:], decoded)
     return decoded
-        
-
+"""     
+"""
 def huff_tree_verse_recur_help(root, direction, codec, decoded):
 
     if direction.left == None and direction.right == None:
@@ -224,7 +223,7 @@ def huff_tree_verse_recur_help(root, direction, codec, decoded):
             huff_tree_verse_help(root, direction.right, codec[1:], decoded)
         if int(codec[0]) == 0:
              huff_tree_verse_help(root, direction.left, codec[1:], decoded)
-
+"""
 
 def huffman_decode(encoded_file, decoded_file):
     """
