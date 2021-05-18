@@ -164,14 +164,14 @@ def huffman_encode(in_file: str, out_file: str) -> None:
         outall.write(header + '\n')
         outall.write(yes)
 
-def parse_header(header_string):
+def parse_header(header_string: str) -> List:
     """Takes first line of encoded file and uses a helper function to recursivly turn those numbers into a 256 spaced frequency counter
     """
     frequen_list = [0]*256
     header_list = header_string.split()
     return parse_help(header_list, frequen_list)
 
-def parse_help(header_list, frequen_list):
+def parse_help(header_list: List, frequen_list: List) -> List:
 
     while len(header_list) > 0:
         frequen_list[int(header_list[0])] = int(header_list[1])
@@ -179,7 +179,7 @@ def parse_help(header_list, frequen_list):
     return frequen_list
 
 
-def leaf_check(root):
+def leaf_check(root: Optional[HuffmanNode]) -> bool:
     """checks if a node is a leaf node that has no left and right attributes"""
     if root.right == None and root.left == None:
         return True
@@ -187,7 +187,7 @@ def leaf_check(root):
         return False
 
 
-def huff_tree_verse2(root, codec):
+def huff_tree_verse2(root: Optinal[HuffmanNode], codec: str) -> List:
     """Takes the completed huffman tree and all the ones and zeroes in the encoded file. Iterates over the data and adds the leaf nodes' character data to a list"""
 
     decoded = []
@@ -202,30 +202,8 @@ def huff_tree_verse2(root, codec):
             reset = root
     return decoded
 
-"""
-def huff_tree_verse_recur(root, codec, decoded):
 
-    if len(codec) > 0:
-        if int(codec[0]) == 1:
-            huff_tree_verse_help(root, root.right, codec[1:], decoded)
-        if int(codec[0]) == 0:
-            huff_tree_verse_help(root, root.left, codec[1:], decoded)
-    return decoded
-"""     
-"""
-def huff_tree_verse_recur_help(root, direction, codec, decoded):
-
-    if direction.left == None and direction.right == None:
-        decoded.append(chr(direction.char_ascii))
-        huff_tree_verse(root, codec, decoded)
-    else:
-        if int(codec[0]) == 1:
-            huff_tree_verse_help(root, direction.right, codec[1:], decoded)
-        if int(codec[0]) == 0:
-             huff_tree_verse_help(root, direction.left, codec[1:], decoded)
-"""
-
-def huffman_decode(encoded_file, decoded_file):
+def huffman_decode(encoded_file: str, decoded_file: str) -> None:
     """
     reads an encoded file and turns it into readable information which it writes to an output file
     """
