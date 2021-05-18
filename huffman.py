@@ -1,5 +1,7 @@
 from __future__ import annotations
 from typing import List, Optional
+import sys
+sys.setrecursionlimit(5000)
 
 class HuffmanNode:
     def __init__(self, char_ascii: int, freq: int, left: Optional[HuffmanNode] = None, right: Optional[HuffmanNode] = None):
@@ -10,10 +12,9 @@ class HuffmanNode:
 
     def __lt__(self, other: HuffmanNode) -> bool:
         return comes_before(self, other)
-"""    
+
     def __repr__(self) -> str:
-        return ("HuffmanNode({!r}, {!r}, {!r}, {!r})".format(chr(self.char_ascii), self.freq, self.left, self.right))
-""" 
+        return ("HuffmanNode({!r}, {!r}, {!r}, {!r})".format(chr(self.char_ascii), self.freq, self.left, self.right)) 
 
 def comes_before(a: HuffmanNode, b: HuffmanNode) -> bool:
     """Returns True if tree rooted at node a comes before tree rooted at node b, False otherwise"""
@@ -161,4 +162,83 @@ def huffman_encode(in_file: str, out_file: str) -> None:
     with open(out_file, 'w', newline = '') as outall:
         outall.write(header + '\n')
         outall.write(yes)
+
+def parse_header(header_string):
+    """Takes first line of encoded file and uses a helper function to recursivly turn those numbers into a 256 spaced frequency counter
+    """
+    frequen_list = [0]*256
+    header_list = header_string.split()
+    return parse_help(header_list, frequen_list)
+
+def parse_help(header_list, frequen_list):
+
+    while len(header_list) > 0:
+        frequen_list[int(header_list[0])] = int(header_list[1])
+        header_list = header_list[2:]
+    return frequen_list
+
+
+def leaf_check(root):
+    """checks if a node is a leaf node that has no left and right attributes"""
+    if root == None:
+        return False
+    if root.right == None and root.left == None:
+        return True
+    else:
+        return False
+
+
+def huff_tree_verse2(root, codec):
+    """Takes the completed huffman tree and all the ones and zeroes in the encoded file. Iterates over the data and adds the leaf nodes' character data to a list"""
+
+    decoded = []
+    reset = root
+    for num in codec:
+        if int(num) == 1:
+            reset = reset.right
+        if int(num) == 0:
+            reset = reset.left
+        if leaf_check(reset) == True:
+            decoded.append(chr(reset.char_ascii))
+            reset = root
+    return decoded
+
+
+def huff_tree_verse_recur(root, codec, decoded):
+
+    if len(codec) > 0:
+        if int(codec[0]) == 1:
+            huff_tree_verse_help(root, root.right, codec[1:], decoded)
+        if int(codec[0]) == 0:
+            huff_tree_verse_help(root, root.left, codec[1:], decoded)
+    return decoded
+        
+
+def huff_tree_verse_recur_help(root, direction, codec, decoded):
+
+    if direction.left == None and direction.right == None:
+        decoded.append(chr(direction.char_ascii))
+        huff_tree_verse(root, codec, decoded)
+    else:
+        if int(codec[0]) == 1:
+            huff_tree_verse_help(root, direction.right, codec[1:], decoded)
+        if int(codec[0]) == 0:
+             huff_tree_verse_help(root, direction.left, codec[1:], decoded)
+
+
+def huffman_decode(encoded_file, decoded_file):
+    """
+    reads an encoded file and turns it into readable information which it writes to an output file
+    """
+    with open(encoded_file, 'r') as dataf:
+        data_lines = dataf.readlines()
+    freq_lst = parse_header(data_lines[0])
+    root = create_huff_tree(freq_lst)
+    codec = data_lines[1][:len(data_lines[1]) - 1]
+    decoded = []
+    text = huff_tree_verse2(root, codec)
+    texty = ''.join(text)
+    with open(decoded_file, 'w', newline = '') as outall:
+        outall.write(texty)
+
 

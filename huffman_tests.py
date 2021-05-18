@@ -35,15 +35,15 @@ class TestList(unittest.TestCase):
         freqlist = cnt_freq("file2.txt")
         hufftree = create_huff_tree(freqlist)
         if hufftree is not None:
-            self.assertEqual(hufftree.freq, 32)
-            self.assertEqual(hufftree.char_ascii, 97)
+            self.assertEqual(hufftree.freq, 33)
+            self.assertEqual(hufftree.char_ascii, 10)
             left = hufftree.left
             right = hufftree.right
             if (left is not None) and (right is not None):
                 self.assertEqual(left.freq, 16)
-                self.assertEqual(left.char_ascii, 97)
-                self.assertEqual(right.freq, 16)
-                self.assertEqual(right.char_ascii, 100)
+                self.assertEqual(left.char_ascii, 100)
+                self.assertEqual(right.freq, 17)
+                self.assertEqual(right.char_ascii, 10)
             else: # pragma: no cover
                 self.fail()
         else: # pragma: no cover
@@ -51,7 +51,7 @@ class TestList(unittest.TestCase):
     
     def test_create_header(self) -> None:
         freqlist = cnt_freq("file2.txt")
-        self.assertEqual(create_header(freqlist), "97 2 98 4 99 8 100 16 102 2")
+        self.assertEqual(create_header(freqlist), "10 1 97 2 98 4 99 8 100 16 102 2")
 
     def test_before_false(self) -> None:
         a = HuffmanNode(71, 8)
@@ -80,9 +80,9 @@ class TestList(unittest.TestCase):
         freqlist = cnt_freq("file2.txt")
         hufftree = create_huff_tree(freqlist)
         codes = create_code(hufftree)
-        self.assertEqual(codes[ord('d')], '1')
-        self.assertEqual(codes[ord('a')], '0000')
-        self.assertEqual(codes[ord('f')], '0001')
+        self.assertEqual(codes[ord('d')], '0')
+        self.assertEqual(codes[ord('a')], '11111')
+        self.assertEqual(codes[ord('f')], '1110')
     
     def test_01_textfile(self) -> None:
         huffman_encode("declaration.txt", "file1_out.txt")
